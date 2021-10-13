@@ -1,0 +1,9 @@
+table {
+  width: 100%;
+}
+.button-row {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  margin-bottom: 10px;
+}

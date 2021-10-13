@@ -1,0 +1,192 @@
+<div class="tablel-filter-container">
+
+  <div class="custom-filter">
+    <form class="custom-filter-form" [formGroup]="searchForm" *ngIf="searchForm">
+      <mat-form-field>
+        <input matInput formControlName="a">
+        <mat-placeholder>Col A</mat-placeholder>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput formControlName="b">
+        <mat-placeholder>Col B</mat-placeholder>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput formControlName="c">
+        <mat-placeholder>Col C</mat-placeholder>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput formControlName="d">
+        <mat-placeholder>Col D</mat-placeholder>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput formControlName="e">
+        <mat-placeholder>Col E</mat-placeholder>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput formControlName="f">
+        <mat-placeholder>Col F</mat-placeholder>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput formControlName="g">
+        <mat-placeholder>Col G</mat-placeholder>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput formControlName="h">
+        <mat-placeholder>Col H</mat-placeholder>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput formControlName="i">
+        <mat-placeholder>Col I</mat-placeholder>
+      </mat-form-field>
+    </form>
+  </div>
+
+  <div class="filter-container">
+
+    <div class="filter-container-item">
+      <div class="button-row">
+        <button mat-raised-button color="primary" (click)="applyCustomfilter()">Apply filters</button>
+        <button mat-raised-button (click)="resetFilter()">Reset filters</button>
+      </div>
+    </div>
+
+    <div class="filter-container-item filter-field">
+      <mat-form-field appearance="standard" class="filter">
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" #input>
+      </mat-form-field>
+    </div>
+
+
+  </div>
+
+  <div class="table-container mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource">
+      <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef>
+          <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+            [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+          </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let row">
+          <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+            [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)" [disabled]="row.excluded">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="a">
+        <th mat-header-cell *matHeaderCellDef> Column A </th>
+        <td mat-cell *matCellDef="let element">
+          <div *ngIf="element.excluded !== true">
+            <span *ngIf="element.colA === '001'" [mdePopoverTriggerFor]="_appPopover" mdePopoverTriggerOn="hover"
+              #popoverTrigger="mdePopoverTrigger" mdePopoverPositionY="below">
+              {{element.colA}}</span>
+            <span *ngIf="element.colA !== '001'"> {{element.colA}}</span>
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="b">
+        <th mat-header-cell *matHeaderCellDef> Column B </th>
+        <td mat-cell *matCellDef="let element"
+          [style.background-color]="element.colB === 'Helium'? 'green' : (element.colB === 'Lithium' ? 'red': null)">
+          <div *ngIf="element.excluded !== true">
+            <span *ngIf="element.colB === 'Helium' || element.colB === 'Lithium'" [mdePopoverTriggerFor]="appPopover"
+              mdePopoverTriggerOn="hover" #popoverTrigger="mdePopoverTrigger" mdePopoverPositionY="below">
+              <b>{{element.colB}}</b></span>
+
+            <span *ngIf="element.colB !== 'Helium' && element.colB !== 'Lithium'"> {{element.colB}}</span>
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="c">
+        <th mat-header-cell *matHeaderCellDef> Column C </th>
+
+        <td mat-cell *matCellDef="let element">
+          <div *ngIf="element.excluded !== true">
+            {{element.colC}}
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="d">
+        <th mat-header-cell *matHeaderCellDef> Column D </th>
+        <td mat-cell *matCellDef="let element">
+          <div *ngIf="element.excluded !== true"> {{element.colD}}
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="e">
+        <th mat-header-cell *matHeaderCellDef> Column E </th>
+        <td mat-cell *matCellDef="let element">
+          <div *ngIf="element.excluded !== true"> {{element.colE}}
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="f">
+        <th mat-header-cell *matHeaderCellDef> Column F </th>
+        <td mat-cell *matCellDef="let element">
+          <div *ngIf="element.excluded !== true">{{element.colF}}</div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="g">
+        <th mat-header-cell *matHeaderCellDef> Column G </th>
+        <td mat-cell *matCellDef="let element">
+          <div *ngIf="element.excluded !== true"> {{element.colG}}
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="h">
+        <th mat-header-cell *matHeaderCellDef> Column H </th>
+        <td mat-cell *matCellDef="let element">
+          <div *ngIf="element.excluded !== true">{{element.colH}}</div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="i">
+        <th mat-header-cell *matHeaderCellDef> Column I </th>
+        <td mat-cell *matCellDef="let element">
+          <div *ngIf="element.excluded !== true">{{element.colI}} </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)"
+        [ngStyle]="row.excluded && {'background-color': 'lightgrey'}">
+      </tr>
+
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
+    </mat-paginator>
+  </div>
+</div>
+
+<mde-popover #_appPopover="mdePopover" [mdePopoverOverlapTrigger]="false">
+  <mat-card>
+    <mat-card-content>
+      <app-tooltip></app-tooltip>
+    </mat-card-content>
+  </mat-card>
+</mde-popover>
+
+<mde-popover #appPopover="mdePopover" [mdePopoverOverlapTrigger]="false">
+  <mat-card class="example-card" style="width:400px">
+    <mat-card-title></mat-card-title>
+    <mat-card-content>
+      <mat-grid-list cols="2" rowHeight="50px">
+        <mat-grid-tile *ngFor="let tile of tiles" [colspan]="tile.cols" [rowspan]="tile.rows">
+          <span class="">
+            <b>{{tile.text}}</b>
+          </span>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </mat-card-content>
+  </mat-card>
+</mde-popover>
